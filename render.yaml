@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: dzelstream
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: TMDB_API_KEY
+        sync: false

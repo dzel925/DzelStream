@@ -1,0 +1,12 @@
+{
+  "name": "dzelstream",
+  "version": "1.0.0",
+  "private": false,
+  "description": "DzelStream movie and TV catalog frontend",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20.12"
+  }
+}
