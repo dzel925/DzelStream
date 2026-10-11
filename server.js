@@ -66,7 +66,7 @@ function allowTmdbBrowserOrigin(request, response) {
 }
 
 function isAllowedTmdbPath(apiPath) {
-    return /^\/(?:trending\/(?:movie|tv)\/day|search\/multi|discover\/(?:movie|tv)|(?:movie|tv)\/(?:popular|top_rated)|movie\/\d+(?:\/(?:credits|videos|similar|watch\/providers))?|tv\/\d+(?:\/(?:credits|videos|similar|watch\/providers|season\/\d+))?)$/.test(apiPath);
+    return /^\/(?:trending\/(?:movie|tv)\/day|search\/multi|discover\/(?:movie|tv)|movie\/(?:popular|top_rated|now_playing|upcoming)|tv\/(?:popular|top_rated|airing_today|on_the_air)|movie\/\d+(?:\/(?:credits|videos|similar|watch\/providers))?|tv\/\d+(?:\/(?:credits|videos|similar|watch\/providers|season\/\d+))?)$/.test(apiPath);
 }
 
 function isRateLimited(request) {
