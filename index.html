@@ -399,7 +399,7 @@
 
         #trendingGrid,
         #popularGrid,
-        #topRatedGrid,
+        #topRatedGrid, #spotlightGrid, #upcomingGrid,
         #watchlistGrid,
         #continueWatchingSection .grid,
         #similarGrid {
@@ -424,7 +424,7 @@
 
         #trendingGrid > *,
         #popularGrid > *,
-        #topRatedGrid > *,
+        #topRatedGrid > *, #spotlightGrid > *, #upcomingGrid > *,
         #watchlistGrid > *,
         #continueWatchingSection .grid > *,
         #similarGrid > * {
@@ -534,7 +534,7 @@
 
             #trendingGrid > *,
             #popularGrid > *,
-            #topRatedGrid > *,
+            #topRatedGrid > *, #spotlightGrid > *, #upcomingGrid > *,
             #watchlistGrid > *,
             #continueWatchingSection .grid > *,
             #similarGrid > * {
@@ -599,7 +599,7 @@
 
             #trendingGrid > *,
             #popularGrid > *,
-            #topRatedGrid > *,
+            #topRatedGrid > *, #spotlightGrid > *, #upcomingGrid > *,
             #watchlistGrid > *,
             #continueWatchingSection .grid > *,
             #similarGrid > * {
@@ -992,7 +992,7 @@
                         </div>
                     </div>
 
-                    <div id="continueWatchingSection"></div>
+                    <div id="continueWatchingSection"></div><section class="space-y-4 sm:space-y-6"><div class="flex items-center justify-between"><h3 class="text-lg sm:text-xl font-black text-white flex items-center"><i class="fa-solid ${currentMediaType === 'movie' ? 'fa-ticket' : 'fa-calendar-day'} text-brand-crimson mr-2"></i> ${currentMediaType === 'movie' ? 'In Theatres' : 'Airing Today'}</h3><div class="flex items-center gap-2"><button onclick="scrollCarousel('spotlightGrid', -1)" class="carousel-control" aria-label="Scroll spotlight left"><i class="fa-solid fa-chevron-left"></i></button><button onclick="scrollCarousel('spotlightGrid', 1)" class="carousel-control" aria-label="Scroll spotlight right"><i class="fa-solid fa-chevron-right"></i></button></div></div><div id="spotlightGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6"><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div></div></section><section class="space-y-4 sm:space-y-6"><div class="flex items-center justify-between"><h3 class="text-lg sm:text-xl font-black text-white flex items-center"><i class="fa-solid fa-calendar-check text-brand-gold mr-2"></i> ${currentMediaType === 'movie' ? 'Coming Soon' : 'On The Air'}</h3><div class="flex items-center gap-2"><button onclick="scrollCarousel('upcomingGrid', -1)" class="carousel-control" aria-label="Scroll upcoming left"><i class="fa-solid fa-chevron-left"></i></button><button onclick="scrollCarousel('upcomingGrid', 1)" class="carousel-control" aria-label="Scroll upcoming right"><i class="fa-solid fa-chevron-right"></i></button></div></div><div id="upcomingGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6"><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div><div class="aspect-[2/3] bg-slate-900 rounded-2xl animate-pulse"></div></div></section>
 
                     <div class="space-y-4 sm:space-y-6">
                         <div class="flex items-center justify-between">
@@ -1042,7 +1042,7 @@
             if (topRatedData && topRatedData.results) {
                 renderMediaGridToContainer(topRatedData.results, 'topRatedGrid');
             }
-            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            Promise.all([fetchTMDB(requestedMediaType === 'movie' ? '/movie/now_playing' : '/tv/airing_today'), fetchTMDB(requestedMediaType === 'movie' ? '/movie/upcoming' : '/tv/on_the_air')]).then(([spotlightData, upcomingData]) => { if (currentTab !== 'trending' || currentMediaType !== requestedMediaType) return; if (spotlightData && Array.isArray(spotlightData.results)) renderMediaGridToContainer(spotlightData.results, 'spotlightGrid'); if (upcomingData && Array.isArray(upcomingData.results)) renderMediaGridToContainer(upcomingData.results, 'upcomingGrid'); });             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         }
 
         function scrollCarousel(containerId, direction) {
